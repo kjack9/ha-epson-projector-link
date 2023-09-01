@@ -1,4 +1,4 @@
-# Espon Projector Link - WIP
+# Espon Projector Link
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]

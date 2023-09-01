@@ -1,6 +1,6 @@
 {
   "domain": "epson_projector_link",
-  "name": "Epson Projector Link WIP",
+  "name": "Epson Projector Link",
   "codeowners": ["@amosyuen"],
   "config_flow": true,
   "dependencies": [],
