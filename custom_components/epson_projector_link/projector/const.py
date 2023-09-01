@@ -48,6 +48,7 @@ STATUS_CODE_MAP = {
 PROPERTY_AUTO_IRIS_MODE = "IRIS"
 PROPERTY_BRIGHTNESS = "BRIGHT"
 PROPERTY_COLOR_MODE = "CMODE"
+PROPERTY_COLOR_SPACE = "CLRSPACE"
 PROPERTY_ERR = "ERR"
 PROPERTY_LAMP_HOURS = "LAMP"
 PROPERTY_MUTE = "MUTE"
@@ -113,6 +114,17 @@ COLOR_MODE_CODE_MAP = {
     "C1": "AutoColor",
 }
 COLOR_MODE_CODE_INVERTED_MAP = invert_map(COLOR_MODE_CODE_MAP)
+
+#
+# Color Ranges
+#
+# Should keep in sync with epson_projector_link/services.yaml select_color_space options
+COLOR_SPACE_CODE_MAP = {
+    "00": "Auto",
+    "01": "BT.709",
+    "02": "BT.2020"
+}
+COLOR_SPACE_CODE_INVERTED_MAP = invert_map(COLOR_SPACE_CODE_MAP)
 
 #
 # Errors

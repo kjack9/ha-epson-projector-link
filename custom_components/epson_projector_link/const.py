@@ -4,6 +4,7 @@ from datetime import timedelta
 from .projector.const import PROPERTY_AUTO_IRIS_MODE
 from .projector.const import PROPERTY_BRIGHTNESS
 from .projector.const import PROPERTY_COLOR_MODE
+from .projector.const import PROPERTY_COLOR_SPACE
 from .projector.const import PROPERTY_ERR
 from .projector.const import PROPERTY_LAMP_HOURS
 from .projector.const import PROPERTY_MUTE
@@ -25,6 +26,7 @@ PROPERTY_TO_ATTRIBUTE_NAME_MAP = {
     PROPERTY_AUTO_IRIS_MODE: "auto_iris_mode",
     PROPERTY_BRIGHTNESS: "brightness",
     PROPERTY_COLOR_MODE: "color_mode",
+    PROPERTY_COLOR_SPACE: "color_space",
     PROPERTY_ERR: "error",
     PROPERTY_LAMP_HOURS: "lamp_hours",
     PROPERTY_MUTE: "is_volume_muted",
@@ -37,6 +39,7 @@ SERVICE_LOAD_LENS_MEMORY = "load_lens_memory"
 SERVICE_LOAD_PICTURE_MEMORY = "load_picture_memory"
 SERVICE_SELECT_AUTO_IRIS_MODE = "select_auto_iris_mode"
 SERVICE_SELECT_COLOR_MODE = "select_color_mode"
+SERVICE_SELECT_COLOR_SPACE = "select_color_space"
 SERVICE_SELECT_POWER_CONSUMPTION_MODE = "select_power_consumption_mode"
 SERVICE_SEND_COMMAND = "send_command"
 SERVICE_SET_BRIGHTNESS = "set_brightness"

@@ -8,6 +8,7 @@ from homeassistant.const import STATE_UNKNOWN
 
 from .const import AUTO_IRIS_MODE_CODE_MAP
 from .const import COLOR_MODE_CODE_MAP
+from .const import COLOR_SPACE_CODE_MAP
 from .const import ESCVPNET_CONNECT_COMMAND
 from .const import ESCVPNETNAME
 from .const import IMEVENT
@@ -22,6 +23,7 @@ from .const import POWER_CONSUMPTION_MODE_CODE_MAP
 from .const import PROPERTY_AUTO_IRIS_MODE
 from .const import PROPERTY_BRIGHTNESS
 from .const import PROPERTY_COLOR_MODE
+from .const import PROPERTY_COLOR_SPACE
 from .const import PROPERTY_ERR
 from .const import PROPERTY_ERR_CODE_MAP
 from .const import PROPERTY_LAMP_HOURS
@@ -71,6 +73,7 @@ POWER_PARSER = POWER_CODE_MAP.get
 PROPERTY_PARSER_MAP = {
     PROPERTY_AUTO_IRIS_MODE: AUTO_IRIS_MODE_CODE_MAP.get,
     PROPERTY_COLOR_MODE: COLOR_MODE_CODE_MAP.get,
+    PROPERTY_COLOR_SPACE: COLOR_MODE_CODE_MAP.get,
     PROPERTY_ERR: PROPERTY_ERR_CODE_MAP.get,
     PROPERTY_LAMP_HOURS: int,
     PROPERTY_BRIGHTNESS: int,

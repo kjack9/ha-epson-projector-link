@@ -30,11 +30,13 @@ from .const import SERVICE_LOAD_LENS_MEMORY
 from .const import SERVICE_LOAD_PICTURE_MEMORY
 from .const import SERVICE_SELECT_AUTO_IRIS_MODE
 from .const import SERVICE_SELECT_COLOR_MODE
+from .const import SERVICE_SELECT_COLOR_SPACE
 from .const import SERVICE_SELECT_POWER_CONSUMPTION_MODE
 from .const import SERVICE_SEND_COMMAND
 from .const import SERVICE_SET_BRIGHTNESS
 from .projector.const import AUTO_IRIS_MODE_CODE_INVERTED_MAP
 from .projector.const import COLOR_MODE_CODE_INVERTED_MAP
+from .projector.const import COLOR_SPACE_CODE_INVERTED_MAP
 from .projector.const import COMMAND_LOAD_LENS_MEMORY
 from .projector.const import COMMAND_LOAD_PICTURE_MEMORY
 from .projector.const import COMMAND_MEDIA_MUTE
@@ -51,6 +53,7 @@ from .projector.const import POWER_CONSUMPTION_MODE_CODE_INVERTED_MAP
 from .projector.const import PROPERTY_AUTO_IRIS_MODE
 from .projector.const import PROPERTY_BRIGHTNESS
 from .projector.const import PROPERTY_COLOR_MODE
+from .projector.const import PROPERTY_COLOR_SPACE
 from .projector.const import PROPERTY_MUTE
 from .projector.const import PROPERTY_POWER
 from .projector.const import PROPERTY_POWER_CONSUMPTION_MODE
@@ -123,6 +126,15 @@ def _setup_services():
             )
         },
         SERVICE_SELECT_COLOR_MODE,
+    )
+    platform.async_register_entity_service(
+        SERVICE_SELECT_COLOR_SPACE,
+        {
+            vol.Required(PROPERTY_TO_ATTRIBUTE_NAME_MAP[PROPERTY_COLOR_SPACE]): vol.All(
+                cv.string, vol.Any(*COLOR_SPACE_CODE_INVERTED_MAP.keys())
+            )
+        },
+        SERVICE_SELECT_COLOR_SPACE,
     )
     platform.async_register_entity_service(
         SERVICE_SELECT_POWER_CONSUMPTION_MODE,
@@ -403,6 +415,11 @@ class EpsonProjectorMediaPlayer(MediaPlayerEntity):
     async def select_color_mode(self, color_mode):
         await self._projector.set_property(
             PROPERTY_COLOR_MODE, COLOR_MODE_CODE_INVERTED_MAP[color_mode]
+        )
+
+    async def select_color_space(self, color_space):
+        await self._projector.set_property(
+            PROPERTY_COLOR_SPACE, COLOR_SPACE_CODE_INVERTED_MAP[color_space]
         )
 
     async def select_power_consumption_mode(self, power_consumption_mode):

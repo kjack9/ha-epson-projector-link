@@ -92,6 +92,27 @@ select_color_mode:
             - "Theatre"
             - "x.v.Color"
 
+select_color_space:
+  name: Select Color Space
+  description: Select color space of Epson projector
+  target:
+    entity:
+      integration: epson_projector_link
+      domain: media_player
+  fields:
+    color_mode:
+      name: Color Space
+      description: Color Space
+      required: true
+      example: BT.709
+      selector:
+        select:
+          options:
+            # Should keep in sync with epson_projector_link/projector/const.yaml COLOR_SPACE_CODE_MAP
+            - "Auto"
+            - "BT.709"
+            - "BT.2020"
+
 select_power_consumption_mode:
   name: Select Power Consumption Mode
   description: Select power consumption mode of Epson projector
