@@ -178,7 +178,7 @@ class Projector:
 
     async def set_property(self, prop, value):
         """Set property. Returns the set prop value."""
-        if not prop or not value:
+        if (not prop or not value) and value is not 0:
             return
         return await self._send_request(Request(f"{prop} {value}", value))
 
@@ -362,6 +362,11 @@ class Projector:
             try:
                 parsed_value = parser(value)
                 if parsed_value is None:
+                    _LOGGER.error(
+                        '_handle_property: prop=%s has unknown raw value="%s"',
+                        prop,
+                        value,
+                    )
                     value = STATE_UNKNOWN
                     _LOGGER.error(
                         '_handle_property: prop=%s has unknown value="%s"',
