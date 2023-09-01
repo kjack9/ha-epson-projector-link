@@ -1,6 +1,6 @@
 {
   "name": "Epson Projector Link WIP",
-  "hacs": "1.6.1",
+  "hacs": "1.6.0",
   "homeassistant": "2023.4.0",
   "render_readme": true
 }
