@@ -32,6 +32,7 @@ from .const import SERVICE_SELECT_AUTO_IRIS_MODE
 from .const import SERVICE_SELECT_COLOR_MODE
 from .const import SERVICE_SELECT_COLOR_SPACE
 from .const import SERVICE_SELECT_DYNAMIC_RANGE
+from .const import SERVICE_SELECT_GAMMA_MODE
 from .const import SERVICE_SELECT_POWER_CONSUMPTION_MODE
 from .const import SERVICE_SEND_COMMAND
 from .const import SERVICE_SET_HDR10_PQ
@@ -40,6 +41,7 @@ from .projector.const import AUTO_IRIS_MODE_CODE_INVERTED_MAP
 from .projector.const import COLOR_MODE_CODE_INVERTED_MAP
 from .projector.const import COLOR_SPACE_CODE_INVERTED_MAP
 from .projector.const import DYNAMIC_RANGE_CODE_INVERTED_MAP
+from .projector.const import GAMMA_MODE_CODE_INVERTED_MAP
 from .projector.const import COMMAND_LOAD_LENS_MEMORY
 from .projector.const import COMMAND_LOAD_PICTURE_MEMORY
 from .projector.const import COMMAND_MEDIA_MUTE
@@ -57,6 +59,7 @@ from .projector.const import PROPERTY_AUTO_IRIS_MODE
 from .projector.const import PROPERTY_COLOR_MODE
 from .projector.const import PROPERTY_COLOR_SPACE
 from .projector.const import PROPERTY_DYNAMIC_RANGE
+from .projector.const import PROPERTY_GAMMA_MODE
 from .projector.const import PROPERTY_HDR10_PQ
 from .projector.const import PROPERTY_LIGHT_OUTPUT
 from .projector.const import PROPERTY_MUTE
@@ -149,6 +152,15 @@ def _setup_services():
             )
         },
         SERVICE_SELECT_DYNAMIC_RANGE,
+    )
+    platform.async_register_entity_service(
+        SERVICE_SELECT_GAMMA_MODE,
+        {
+            vol.Required(PROPERTY_TO_ATTRIBUTE_NAME_MAP[PROPERTY_GAMMA_MODE]): vol.All(
+                cv.string, vol.Any(*GAMMA_MODE_CODE_INVERTED_MAP.keys())
+            )
+        },
+        SERVICE_SELECT_GAMMA_MODE,
     )
     platform.async_register_entity_service(
         SERVICE_SELECT_POWER_CONSUMPTION_MODE,
@@ -448,6 +460,11 @@ class EpsonProjectorMediaPlayer(MediaPlayerEntity):
     async def select_dynamic_range(self, dynamic_range):
         await self._projector.set_property(
             PROPERTY_DYNAMIC_RANGE, DYNAMIC_RANGE_CODE_INVERTED_MAP[dynamic_range]
+        )
+
+    async def select_gamma_mode(self, gamma_mode):
+        await self._projector.set_property(
+            PROPERTY_GAMMA_MODE, GAMMA_MODE_CODE_INVERTED_MAP[gamma_mode]
         )
 
     async def select_power_consumption_mode(self, power_consumption_mode):

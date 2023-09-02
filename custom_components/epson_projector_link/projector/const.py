@@ -50,6 +50,7 @@ PROPERTY_COLOR_MODE = "CMODE"
 PROPERTY_COLOR_SPACE = "CLRSPACE"
 PROPERTY_DYNAMIC_RANGE = "DYNRANGE"
 PROPERTY_ERR = "ERR"
+PROPERTY_GAMMA_MODE = "GAMMA"
 PROPERTY_HDR10_PQ = "HDRPQ"
 PROPERTY_LAMP_HOURS = "LAMP"
 PROPERTY_LIGHT_OUTPUT= "LUMLEVEL"
@@ -167,6 +168,21 @@ PROPERTY_ERR_CODE_MAP = {
     "15": "Obstacle detection error",
     "16": "IF board discernment error",
 }
+
+#
+# Gamma Modes
+#
+# Should keep in sync with epson_projector_link/services.yaml select_gamma_modes options
+GAMMA_MODE_CODE_MAP = {
+    "20":   "+2",
+    "21":   "+1",
+    "22":   "+0",
+    "23":   "-1",
+    "24":   "-2",
+    "F0":   "Custom",
+    "INIT": "INIT"
+}
+GAMMA_MODE_CODE_INVERTED_MAP = invert_map(GAMMA_MODE_CODE_MAP)
 
 #
 # Power

@@ -15,6 +15,7 @@ load_lens_memory:
         number:
           min: 1
           max: 10
+          mode: box
 
 load_picture_memory:
   name: Load Picture Memory
@@ -33,6 +34,7 @@ load_picture_memory:
         number:
           min: 1
           max: 10
+          mode: box
 
 select_auto_iris_mode:
   name: Select Auto Iris
@@ -134,6 +136,31 @@ select_dynamic_range:
             - "SDR"
             - "HDR10"
             - "HLG"
+
+select_gamma_mode:
+  name: Select Gamma Mode
+  description: Select Gamma Mode of Epson projector
+  target:
+    entity:
+      integration: epson_projector_link
+      domain: media_player
+  fields:
+    gamma_mode:
+      name: Gamma Mode
+      description: Gamma Mode
+      required: true
+      example: "+1"
+      selector:
+        select:
+          options:
+            # Should keep in sync with epson_projector_link/projector/const.yaml GAMMA_MODE_CODE_MAP
+            - "+2"
+            - "+1"
+            - "+0"
+            - "-1"
+            - "-2"
+            - "Custom"
+            - "INIT"
 
 select_power_consumption_mode:
   name: Select Power Consumption Mode

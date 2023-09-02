@@ -12,6 +12,7 @@ from .const import COLOR_SPACE_CODE_MAP
 from .const import DYNAMIC_RANGE_CODE_MAP
 from .const import ESCVPNET_CONNECT_COMMAND
 from .const import ESCVPNETNAME
+from .const import GAMMA_MODE_CODE_MAP
 from .const import IMEVENT
 from .const import IMEVENT_ALARM_BIT_MAP
 from .const import IMEVENT_STATUS_CODE_ABNORMAL
@@ -27,6 +28,7 @@ from .const import PROPERTY_COLOR_SPACE
 from .const import PROPERTY_DYNAMIC_RANGE
 from .const import PROPERTY_ERR
 from .const import PROPERTY_ERR_CODE_MAP
+from .const import PROPERTY_GAMMA_MODE
 from .const import PROPERTY_HDR10_PQ
 from .const import PROPERTY_LAMP_HOURS
 from .const import PROPERTY_LIGHT_OUTPUT
@@ -79,6 +81,7 @@ PROPERTY_PARSER_MAP = {
     PROPERTY_COLOR_SPACE: COLOR_SPACE_CODE_MAP.get,
     PROPERTY_DYNAMIC_RANGE: DYNAMIC_RANGE_CODE_MAP.get,
     PROPERTY_ERR: PROPERTY_ERR_CODE_MAP.get,
+    PROPERTY_GAMMA_MODE: GAMMA_MODE_CODE_MAP.get,
     PROPERTY_HDR10_PQ: int,
     PROPERTY_LAMP_HOURS: int,
     PROPERTY_LIGHT_OUTPUT: int,
