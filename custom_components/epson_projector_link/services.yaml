@@ -343,7 +343,5 @@ set_light_output:
               value: 240
             - label: "99% Power (Value: 245)"
               value: 245
-            - label: "100% Power (Value: 251)"
-              value: 251
-            - label: "50% Power (Value: 0)"
-              value: 0
+            - label: "100% Power (Value: 250)"
+              value: 250
