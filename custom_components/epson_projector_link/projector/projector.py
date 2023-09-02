@@ -113,6 +113,7 @@ class Projector:
         self._is_open = False
         self._serial = None
         self._callback = None
+        self._update_additional_attribute = None
         self._update_additional_attributes = None
         self._reset_callbacks_properties = None
         self._power_state = None
@@ -124,6 +125,9 @@ class Projector:
 
     def set_callback(self, callback):
         self._callback = callback
+
+    def set_update_additional_attribute(self, update_additional_attribute):
+        self._update_additional_attribute = update_additional_attribute
 
     def set_update_additional_attributes(self, update_additional_attributes):
         self._update_additional_attributes = update_additional_attributes
@@ -201,11 +205,8 @@ class Projector:
             return
         return_value = await self._send_request(Request(f"{prop} {value}", value))
 
-        # immediately update additional attributes
-        self._update_additional_attributes()
-
-        # reset timers for additional attributes
-        self._reset_callbacks_properties()
+        # immediately update the just-set attribute
+        self._update_additional_attribute(prop)
 
         return return_value
 

@@ -295,7 +295,9 @@ class EpsonProjectorMediaPlayer(MediaPlayerEntity):
 
         projector.set_callback(self._callback)
         projector.set_update_additional_attributes(self.update_additional_attributes)
+        projector.set_update_additional_attribute(self.update_additional_attribute)
         projector.set_reset_callbacks_properties(self.reset_callbacks_properties)
+
 
         self._unregister_callbacks_power = []
         self._unregister_callbacks_properties = []
@@ -332,7 +334,6 @@ class EpsonProjectorMediaPlayer(MediaPlayerEntity):
             self._unregister_callbacks_properties.append(
                 async_track_time_interval(
                     self._hass,
-                    # self.update_additional_attributes,
                     get_properties_update,
                     self._scan_interval_properties,
                 )
@@ -392,6 +393,14 @@ class EpsonProjectorMediaPlayer(MediaPlayerEntity):
         if self._attr_state == STATE_ON:
             for prop in self._poll_properties:
                 self.hass.create_task(self.async_try_get_property(prop))
+
+    def update_additional_attribute(self, prop):
+        """Poll a single additional attribute"""
+        if prop == PROPERTY_SOURCE:
+            self.hass.create_task(self.async_try_get_property(PROPERTY_SOURCE_LIST))
+
+        if self._attr_state == STATE_ON:
+            self.hass.create_task(self.async_try_get_property(prop))
 
     async def async_try_get_property(self, prop):
         try:
