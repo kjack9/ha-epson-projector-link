@@ -58,3 +58,4 @@ SERVICE_SET_HLG_CURVE = "set_hlg_curve"
 SERVICE_SET_LIGHT_OUTPUT = "set_light_output"
 
 SERVICE_SEND_COMMAND = "send_command"
+SERVICE_SEND_REMOTE_CODE = "send_remote_code"

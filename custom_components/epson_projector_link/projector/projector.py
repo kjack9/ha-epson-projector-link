@@ -218,6 +218,13 @@ class Projector:
             command = f"{command} {arg}"
         return await self._send_request(Request(command))
 
+    async def send_remote_code(self, remote_code):
+        """Send command."""
+        if not remote_code:
+            return
+        command = f"KEY {remote_code}"
+        return await self._send_request(Request(command))
+
     async def _send_request(self, request):
         """Send TCP request."""
         _LOGGER.debug('_send_request: command="%s"', request.command)

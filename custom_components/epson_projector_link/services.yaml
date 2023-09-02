@@ -199,6 +199,22 @@ send_command:
       selector:
         text:
 
+send_remote_code:
+  name: Send Remote Code
+  description: Send Remote Code
+  target:
+    entity:
+      integration: epson_projector_link
+      domain: media_player
+  fields:
+    remote_code:
+      name: Remote Code
+      description: "Remote Key Codes as indicated in the Epson documentation: https://epson.com/Support/wa00572"
+      required: true
+      example: 03
+      selector:
+        text:
+
 set_hdr10_pq_curve:
   name: Set HDR10 PQ Curve
   description: Sets the HDR10 PQ Curve slider in the HDR menu. Range from 1 to 16.

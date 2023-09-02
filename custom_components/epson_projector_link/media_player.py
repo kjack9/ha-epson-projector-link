@@ -35,6 +35,7 @@ from .const import SERVICE_SELECT_DYNAMIC_RANGE
 from .const import SERVICE_SELECT_GAMMA_MODE
 from .const import SERVICE_SELECT_POWER_CONSUMPTION_MODE
 from .const import SERVICE_SEND_COMMAND
+from .const import SERVICE_SEND_REMOTE_CODE
 from .const import SERVICE_SET_HDR10_PQ_CURVE
 from .const import SERVICE_SET_HLG_CURVE
 from .const import SERVICE_SET_LIGHT_OUTPUT
@@ -179,7 +180,12 @@ def _setup_services():
         SERVICE_SEND_COMMAND,
         {vol.Required("command"): str},
         SERVICE_SEND_COMMAND,
-    )
+    ),
+    platform.async_register_entity_service(
+        SERVICE_SEND_REMOTE_CODE,
+        {vol.Required("remote_code"): str},
+        SERVICE_SEND_REMOTE_CODE,
+    ),
     platform.async_register_entity_service(
         SERVICE_SET_HDR10_PQ_CURVE,
         {
@@ -539,6 +545,9 @@ class EpsonProjectorMediaPlayer(MediaPlayerEntity):
 
     async def send_command(self, command):
         await self._projector.send_command(command)
+
+    async def send_remote_code(self, remote_code):
+        await self._projector.send_remote_code(remote_code)
 
     def _callback(self, prop, value):
         if prop == PROPERTY_POWER:
