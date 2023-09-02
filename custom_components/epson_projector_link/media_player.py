@@ -289,45 +289,80 @@ class EpsonProjectorMediaPlayer(MediaPlayerEntity):
         self._attr_supported_features = _get_supported_features(poll_properties)
         self._attr_translation_key = "projector"
 
-        projector.set_callback(self._callback)
+        self._hass = hass
+        self._scan_interval_power = scan_interval_power
+        self._scan_interval_properties = scan_interval_properties
 
-        unregister_callbacks = []
-        if scan_interval_power is not None:
+        projector.set_callback(self._callback)
+        projector.set_update_additional_attributes(self.update_additional_attributes)
+        projector.set_reset_callbacks_properties(self.reset_callbacks_properties)
+
+        self._unregister_callbacks_power = []
+        self._unregister_callbacks_properties = []
+
+        # Schedule updates
+        self._schedule_updates_power()
+        self._schedule_updates_properties()
+
+    def _schedule_updates_power(self):
+        """Schedules power updates using HASS' async_track_time_interval."""
+        if self._scan_interval_power is not None:
 
             async def get_power_update(now):
-                _LOGGER.debug("get_power_update:")
+                _LOGGER.debug(f"get_power_update:")
                 return await self.async_get_power()
 
-            unregister_callbacks.append(
+            self._unregister_callbacks_power.append(
                 async_track_time_interval(
-                    hass,
+                    self._hass,
                     # self.async_get_power,
                     get_power_update,
-                    scan_interval_power,
+                    self._scan_interval_power,
                 )
             )
 
-        if scan_interval_properties is not None and len(poll_properties) > 0:
+    def _schedule_updates_properties(self):
+        """Schedules properties updates using HASS' async_track_time_interval."""
+        if self._scan_interval_properties is not None and len(self._poll_properties) > 0:
 
-            def update_attributes(now):
-                _LOGGER.debug("update_attributes:")
+            def get_properties_update(now):
+                _LOGGER.debug(f"get_properties_update:")
                 return self.update_additional_attributes()
 
-            unregister_callbacks.append(
+            self._unregister_callbacks_properties.append(
                 async_track_time_interval(
-                    hass,
+                    self._hass,
                     # self.update_additional_attributes,
-                    update_attributes,
-                    scan_interval_properties,
+                    get_properties_update,
+                    self._scan_interval_properties,
                 )
             )
-        self._unregister_callbacks = unregister_callbacks
 
     def unload(self):
         """Unload projector entity."""
-        for callback in self._unregister_callbacks:
+        _LOGGER.debug(f"unload callbacks")
+        self._unload_callbacks_power()
+        self._unload_callbacks_properties()
+
+    def _unload_callbacks_power(self):
+        """Unload 'power' callbacks."""
+        for callback in self._unregister_callbacks_power:
             callback()
-        self._unregister_callbacks.clear()
+        self._unregister_callbacks_power.clear()
+
+    def _unload_callbacks_properties(self):
+        """Unload 'properties' callbacks."""
+        for callback in self._unregister_callbacks_properties:
+            callback()
+        self._unregister_callbacks_properties.clear()
+
+    def reset_callbacks_properties(self):
+        """Reset 'properties' callbacks so that the timer is back to the original value."""
+        _LOGGER.debug(f"reset scan interval timer for properties")
+        for callback in self._unregister_callbacks_properties:
+            callback()
+
+        self._schedule_updates_properties()
 
     async def async_update(self):
         """Update state."""

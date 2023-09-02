@@ -113,6 +113,8 @@ class Projector:
         self._is_open = False
         self._serial = None
         self._callback = None
+        self._update_additional_attributes = None
+        self._reset_callbacks_properties = None
         self._power_state = None
         self._power_on_off_future = None
         self._request_queue = deque()
@@ -123,10 +125,15 @@ class Projector:
     def set_callback(self, callback):
         self._callback = callback
 
+    def set_update_additional_attributes(self, update_additional_attributes):
+        self._update_additional_attributes = update_additional_attributes
+
+    def set_reset_callbacks_properties(self, reset_callbacks_properties):
+        self._reset_callbacks_properties = reset_callbacks_properties
+
     async def connect(self):
         """Async init to open connection with projector."""
         _LOGGER.debug("connect")
-        response = None
         try:
             with async_timeout.timeout(TIMEOUT_CONNECT):
                 reader, writer = await asyncio.open_connection(
@@ -186,13 +193,21 @@ class Projector:
         """Get property state from device."""
         if not prop:
             return
-        return await self._send_request(Request(f"{prop}?"))
+        await self._send_request(Request(f"{prop}?"))
 
     async def set_property(self, prop, value):
         """Set property. Returns the set prop value."""
-        if (not prop or not value) and value is not 0:
+        if (not prop or not value) and value != 0:
             return
-        return await self._send_request(Request(f"{prop} {value}", value))
+        return_value = await self._send_request(Request(f"{prop} {value}", value))
+
+        # immediately update additional attributes
+        self._update_additional_attributes()
+
+        # reset timers for additional attributes
+        self._reset_callbacks_properties()
+
+        return return_value
 
     async def send_command(self, command, arg=None):
         """Send command."""
