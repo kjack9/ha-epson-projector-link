@@ -2,11 +2,13 @@
 from datetime import timedelta
 
 from .projector.const import PROPERTY_AUTO_IRIS_MODE
-from .projector.const import PROPERTY_BRIGHTNESS
 from .projector.const import PROPERTY_COLOR_MODE
 from .projector.const import PROPERTY_COLOR_SPACE
+from .projector.const import PROPERTY_DYNAMIC_RANGE
 from .projector.const import PROPERTY_ERR
+from .projector.const import PROPERTY_HDR10_PQ
 from .projector.const import PROPERTY_LAMP_HOURS
+from .projector.const import PROPERTY_LIGHT_OUTPUT
 from .projector.const import PROPERTY_MUTE
 from .projector.const import PROPERTY_POWER_CONSUMPTION_MODE
 from .projector.const import PROPERTY_SOURCE
@@ -24,11 +26,13 @@ POWER_TIMEOUT_RETRY_INTERVAL = timedelta(seconds=10)
 # Update error messages in strings.json and translations/en.json
 PROPERTY_TO_ATTRIBUTE_NAME_MAP = {
     PROPERTY_AUTO_IRIS_MODE: "auto_iris_mode",
-    PROPERTY_BRIGHTNESS: "brightness",
     PROPERTY_COLOR_MODE: "color_mode",
     PROPERTY_COLOR_SPACE: "color_space",
+    PROPERTY_DYNAMIC_RANGE: "dynamic_range",
     PROPERTY_ERR: "error",
+    PROPERTY_HDR10_PQ: "hdr10_pq",
     PROPERTY_LAMP_HOURS: "lamp_hours",
+    PROPERTY_LIGHT_OUTPUT: "light_output",
     PROPERTY_MUTE: "is_volume_muted",
     PROPERTY_POWER_CONSUMPTION_MODE: "power_consumption_mode",
     PROPERTY_SOURCE: "source",
@@ -40,6 +44,8 @@ SERVICE_LOAD_PICTURE_MEMORY = "load_picture_memory"
 SERVICE_SELECT_AUTO_IRIS_MODE = "select_auto_iris_mode"
 SERVICE_SELECT_COLOR_MODE = "select_color_mode"
 SERVICE_SELECT_COLOR_SPACE = "select_color_space"
+SERVICE_SELECT_DYNAMIC_RANGE = "select_dynamic_range"
+SERVICE_SET_HDR10_PQ = "set_hdr10_pq"
 SERVICE_SELECT_POWER_CONSUMPTION_MODE = "select_power_consumption_mode"
 SERVICE_SEND_COMMAND = "send_command"
-SERVICE_SET_BRIGHTNESS = "set_brightness"
+SERVICE_SET_LIGHT_OUTPUT = "set_light_output"

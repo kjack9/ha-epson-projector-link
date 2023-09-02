@@ -31,12 +31,15 @@ from .const import SERVICE_LOAD_PICTURE_MEMORY
 from .const import SERVICE_SELECT_AUTO_IRIS_MODE
 from .const import SERVICE_SELECT_COLOR_MODE
 from .const import SERVICE_SELECT_COLOR_SPACE
+from .const import SERVICE_SELECT_DYNAMIC_RANGE
 from .const import SERVICE_SELECT_POWER_CONSUMPTION_MODE
 from .const import SERVICE_SEND_COMMAND
-from .const import SERVICE_SET_BRIGHTNESS
+from .const import SERVICE_SET_HDR10_PQ
+from .const import SERVICE_SET_LIGHT_OUTPUT
 from .projector.const import AUTO_IRIS_MODE_CODE_INVERTED_MAP
 from .projector.const import COLOR_MODE_CODE_INVERTED_MAP
 from .projector.const import COLOR_SPACE_CODE_INVERTED_MAP
+from .projector.const import DYNAMIC_RANGE_CODE_INVERTED_MAP
 from .projector.const import COMMAND_LOAD_LENS_MEMORY
 from .projector.const import COMMAND_LOAD_PICTURE_MEMORY
 from .projector.const import COMMAND_MEDIA_MUTE
@@ -51,9 +54,11 @@ from .projector.const import OFF
 from .projector.const import ON
 from .projector.const import POWER_CONSUMPTION_MODE_CODE_INVERTED_MAP
 from .projector.const import PROPERTY_AUTO_IRIS_MODE
-from .projector.const import PROPERTY_BRIGHTNESS
 from .projector.const import PROPERTY_COLOR_MODE
 from .projector.const import PROPERTY_COLOR_SPACE
+from .projector.const import PROPERTY_DYNAMIC_RANGE
+from .projector.const import PROPERTY_HDR10_PQ
+from .projector.const import PROPERTY_LIGHT_OUTPUT
 from .projector.const import PROPERTY_MUTE
 from .projector.const import PROPERTY_POWER
 from .projector.const import PROPERTY_POWER_CONSUMPTION_MODE
@@ -137,6 +142,15 @@ def _setup_services():
         SERVICE_SELECT_COLOR_SPACE,
     )
     platform.async_register_entity_service(
+        SERVICE_SELECT_DYNAMIC_RANGE,
+        {
+            vol.Required(PROPERTY_TO_ATTRIBUTE_NAME_MAP[PROPERTY_DYNAMIC_RANGE]): vol.All(
+                cv.string, vol.Any(*DYNAMIC_RANGE_CODE_INVERTED_MAP.keys())
+            )
+        },
+        SERVICE_SELECT_DYNAMIC_RANGE,
+    )
+    platform.async_register_entity_service(
         SERVICE_SELECT_POWER_CONSUMPTION_MODE,
         {
             vol.Required(
@@ -153,13 +167,22 @@ def _setup_services():
         SERVICE_SEND_COMMAND,
     )
     platform.async_register_entity_service(
-        SERVICE_SET_BRIGHTNESS,
+        SERVICE_SET_HDR10_PQ,
         {
-            vol.Required(PROPERTY_TO_ATTRIBUTE_NAME_MAP[PROPERTY_BRIGHTNESS]): vol.All(
-                vol.Coerce(int), vol.Range(min=0, max=100)
+            vol.Required(PROPERTY_TO_ATTRIBUTE_NAME_MAP[PROPERTY_HDR10_PQ]): vol.All(
+                vol.Coerce(int), vol.Range(min=1, max=16)
             )
         },
-        SERVICE_SET_BRIGHTNESS,
+        SERVICE_SET_HDR10_PQ,
+    )
+    platform.async_register_entity_service(
+        SERVICE_SET_LIGHT_OUTPUT,
+        {
+            vol.Required(PROPERTY_TO_ATTRIBUTE_NAME_MAP[PROPERTY_LIGHT_OUTPUT]): vol.All(
+                vol.Coerce(int), vol.Range(min=0, max=251)
+            )
+        },
+        SERVICE_SET_LIGHT_OUTPUT,
     )
 
 
@@ -422,14 +445,22 @@ class EpsonProjectorMediaPlayer(MediaPlayerEntity):
             PROPERTY_COLOR_SPACE, COLOR_SPACE_CODE_INVERTED_MAP[color_space]
         )
 
+    async def select_dynamic_range(self, dynamic_range):
+        await self._projector.set_property(
+            PROPERTY_DYNAMIC_RANGE, DYNAMIC_RANGE_CODE_INVERTED_MAP[dynamic_range]
+        )
+
     async def select_power_consumption_mode(self, power_consumption_mode):
         await self._projector.set_property(
             PROPERTY_POWER_CONSUMPTION_MODE,
             POWER_CONSUMPTION_MODE_CODE_INVERTED_MAP[power_consumption_mode],
         )
 
-    async def set_brightness(self, brightness):
-        await self._projector.set_property(PROPERTY_BRIGHTNESS, brightness)
+    async def set_hdr10_pq(self, hdr10_pq):
+        await self._projector.set_property(PROPERTY_HDR10_PQ, hdr10_pq)
+
+    async def set_light_output(self, light_output):
+        await self._projector.set_property(PROPERTY_LIGHT_OUTPUT, light_output)
 
     async def send_command(self, command):
         await self._projector.send_command(command)

@@ -9,6 +9,7 @@ from homeassistant.const import STATE_UNKNOWN
 from .const import AUTO_IRIS_MODE_CODE_MAP
 from .const import COLOR_MODE_CODE_MAP
 from .const import COLOR_SPACE_CODE_MAP
+from .const import DYNAMIC_RANGE_CODE_MAP
 from .const import ESCVPNET_CONNECT_COMMAND
 from .const import ESCVPNETNAME
 from .const import IMEVENT
@@ -21,12 +22,14 @@ from .const import ON
 from .const import POWER_CODE_MAP
 from .const import POWER_CONSUMPTION_MODE_CODE_MAP
 from .const import PROPERTY_AUTO_IRIS_MODE
-from .const import PROPERTY_BRIGHTNESS
 from .const import PROPERTY_COLOR_MODE
 from .const import PROPERTY_COLOR_SPACE
+from .const import PROPERTY_DYNAMIC_RANGE
 from .const import PROPERTY_ERR
 from .const import PROPERTY_ERR_CODE_MAP
+from .const import PROPERTY_HDR10_PQ
 from .const import PROPERTY_LAMP_HOURS
+from .const import PROPERTY_LIGHT_OUTPUT
 from .const import PROPERTY_MUTE
 from .const import PROPERTY_POWER
 from .const import PROPERTY_POWER_CONSUMPTION_MODE
@@ -73,10 +76,12 @@ POWER_PARSER = POWER_CODE_MAP.get
 PROPERTY_PARSER_MAP = {
     PROPERTY_AUTO_IRIS_MODE: AUTO_IRIS_MODE_CODE_MAP.get,
     PROPERTY_COLOR_MODE: COLOR_MODE_CODE_MAP.get,
-    PROPERTY_COLOR_SPACE: COLOR_MODE_CODE_MAP.get,
+    PROPERTY_COLOR_SPACE: COLOR_SPACE_CODE_MAP.get,
+    PROPERTY_DYNAMIC_RANGE: DYNAMIC_RANGE_CODE_MAP.get,
     PROPERTY_ERR: PROPERTY_ERR_CODE_MAP.get,
+    PROPERTY_HDR10_PQ: int,
     PROPERTY_LAMP_HOURS: int,
-    PROPERTY_BRIGHTNESS: int,
+    PROPERTY_LIGHT_OUTPUT: int,
     PROPERTY_MUTE: lambda v: v == ON,
     PROPERTY_POWER: POWER_PARSER,
     PROPERTY_POWER_CONSUMPTION_MODE: POWER_CONSUMPTION_MODE_CODE_MAP.get,
@@ -363,16 +368,11 @@ class Projector:
                 parsed_value = parser(value)
                 if parsed_value is None:
                     _LOGGER.error(
-                        '_handle_property: prop=%s has unknown raw value="%s"',
-                        prop,
-                        value,
-                    )
-                    value = STATE_UNKNOWN
-                    _LOGGER.error(
                         '_handle_property: prop=%s has unknown value="%s"',
                         prop,
                         value,
                     )
+                    value = STATE_UNKNOWN
                 value = parsed_value
             except Exception as err:
                 _LOGGER.error(

@@ -94,17 +94,17 @@ select_color_mode:
 
 select_color_space:
   name: Select Color Space
-  description: Select color space of Epson projector
+  description: Select Color Space of Epson projector
   target:
     entity:
       integration: epson_projector_link
       domain: media_player
   fields:
-    color_mode:
+    color_space:
       name: Color Space
       description: Color Space
       required: true
-      example: BT.709
+      example: "BT.709"
       selector:
         select:
           options:
@@ -112,6 +112,28 @@ select_color_space:
             - "Auto"
             - "BT.709"
             - "BT.2020"
+
+select_dynamic_range:
+  name: Select Dynamic Range (HDR)
+  description: Select Dynamic Range (HDR) of Epson projector
+  target:
+    entity:
+      integration: epson_projector_link
+      domain: media_player
+  fields:
+    dynamic_range:
+      name: Dynamic Range
+      description: Dynamic Range
+      required: true
+      example: Auto
+      selector:
+        select:
+          options:
+            # Should keep in sync with epson_projector_link/projector/const.yaml DYNAMIC_RANGE_CODE_MAP
+            - "Auto"
+            - "SDR"
+            - "HDR10"
+            - "HLG"
 
 select_power_consumption_mode:
   name: Select Power Consumption Mode
@@ -150,20 +172,151 @@ send_command:
       selector:
         text:
 
-set_brightness:
-  name: Set Brightness
-  description: Set brightness of Epson projector
+set_hdr10_pq:
+  name: Set HDR10 PQ Curve
+  description: Sets the HDR10 PQ Curve slider in the HDR menu. Range from 1 to 16.
   target:
     entity:
       integration: epson_projector_link
       domain: media_player
   fields:
-    brightness:
-      name: Brightness
-      description: Brightness
+    hdr10_pq:
+      name: HDR10 PQ Slider Value
+      description: HDR10 PQ Slider Value
       required: true
-      example: 128
+      example: 8
       selector:
         number:
-          min: 0
-          max: 255
+          min: 1
+          max: 16
+
+set_light_output:
+  name: Set Light Output
+  description: Set Light Output of Epson projector. Range from 0 to 251 (50 to 100%).
+  target:
+    entity:
+      integration: epson_projector_link
+      domain: media_player
+  fields:
+    light_output:
+      name: Light Output
+      description: Light Output
+      required: true
+      example: 125
+      selector:
+        select:
+          # I would love if someone could figure out why this doesn't work:
+          #
+          # options: >
+          #   {% for pct in range(50, 101) %}
+          #   {% set value = (pct - 50) / 50 * 251 %}
+          #   - label: "{{ pct }}% Power (Value: {{ value }})"
+          #     value: {{ value }}
+          #   {% endfor %}
+          #
+          # Guess I'll brute force it...
+          options:
+            - label: "50% Power (Value: 0)"
+              value: 0
+            - label: "51% Power (Value: 5)"
+              value: 5
+            - label: "52% Power (Value: 10)"
+              value: 10
+            - label: "53% Power (Value: 15)"
+              value: 15
+            - label: "54% Power (Value: 20)"
+              value: 20
+            - label: "55% Power (Value: 25)"
+              value: 25
+            - label: "56% Power (Value: 30)"
+              value: 30
+            - label: "57% Power (Value: 35)"
+              value: 35
+            - label: "58% Power (Value: 40)"
+              value: 40
+            - label: "59% Power (Value: 45)"
+              value: 45
+            - label: "60% Power (Value: 50)"
+              value: 50
+            - label: "61% Power (Value: 55)"
+              value: 55
+            - label: "62% Power (Value: 60)"
+              value: 60
+            - label: "63% Power (Value: 65)"
+              value: 65
+            - label: "64% Power (Value: 70)"
+              value: 70
+            - label: "65% Power (Value: 75)"
+              value: 75
+            - label: "66% Power (Value: 80)"
+              value: 80
+            - label: "67% Power (Value: 85)"
+              value: 85
+            - label: "68% Power (Value: 90)"
+              value: 90
+            - label: "69% Power (Value: 95)"
+              value: 95
+            - label: "70% Power (Value: 100)"
+              value: 100
+            - label: "71% Power (Value: 105)"
+              value: 105
+            - label: "72% Power (Value: 110)"
+              value: 110
+            - label: "73% Power (Value: 115)"
+              value: 115
+            - label: "74% Power (Value: 120)"
+              value: 120
+            - label: "75% Power (Value: 125)"
+              value: 125
+            - label: "76% Power (Value: 130)"
+              value: 130
+            - label: "77% Power (Value: 135)"
+              value: 135
+            - label: "78% Power (Value: 140)"
+              value: 140
+            - label: "79% Power (Value: 145)"
+              value: 145
+            - label: "80% Power (Value: 150)"
+              value: 150
+            - label: "81% Power (Value: 155)"
+              value: 155
+            - label: "82% Power (Value: 160)"
+              value: 160
+            - label: "83% Power (Value: 165)"
+              value: 165
+            - label: "84% Power (Value: 170)"
+              value: 170
+            - label: "85% Power (Value: 175)"
+              value: 175
+            - label: "86% Power (Value: 180)"
+              value: 180
+            - label: "87% Power (Value: 185)"
+              value: 185
+            - label: "88% Power (Value: 190)"
+              value: 190
+            - label: "89% Power (Value: 195)"
+              value: 195
+            - label: "90% Power (Value: 200)"
+              value: 200
+            - label: "91% Power (Value: 205)"
+              value: 205
+            - label: "92% Power (Value: 210)"
+              value: 210
+            - label: "93% Power (Value: 215)"
+              value: 215
+            - label: "94% Power (Value: 220)"
+              value: 220
+            - label: "95% Power (Value: 225)"
+              value: 225
+            - label: "96% Power (Value: 230)"
+              value: 230
+            - label: "97% Power (Value: 235)"
+              value: 235
+            - label: "98% Power (Value: 240)"
+              value: 240
+            - label: "99% Power (Value: 245)"
+              value: 245
+            - label: "100% Power (Value: 251)"
+              value: 251
+            - label: "50% Power (Value: 0)"
+              value: 0
