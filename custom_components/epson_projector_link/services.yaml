@@ -217,6 +217,24 @@ set_hdr10_pq_curve:
           min: 1
           max: 16
 
+set_hlg_curve:
+  name: Set HLG Curve
+  description: Sets the HLG Curve slider in the HDR menu. Range from 1 to 16.
+  target:
+    entity:
+      integration: epson_projector_link
+      domain: media_player
+  fields:
+    hlg_curve:
+      name: HLG Curve Slider Value
+      description: HLG Curve Slider Value
+      required: true
+      example: 8
+      selector:
+        number:
+          min: 1
+          max: 16
+
 set_light_output:
   name: Set Light Output
   description: Set Light Output of Epson projector. Range from 0 to 251 (50 to 100%).

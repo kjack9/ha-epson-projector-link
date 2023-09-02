@@ -30,6 +30,7 @@ from .const import PROPERTY_ERR
 from .const import PROPERTY_ERR_CODE_MAP
 from .const import PROPERTY_GAMMA_MODE
 from .const import PROPERTY_HDR10_PQ_CURVE
+from .const import PROPERTY_HLG_CURVE
 from .const import PROPERTY_LAMP_HOURS
 from .const import PROPERTY_LIGHT_OUTPUT
 from .const import PROPERTY_MUTE
@@ -84,6 +85,7 @@ PROPERTY_PARSER_MAP = {
     PROPERTY_ERR: PROPERTY_ERR_CODE_MAP.get,
     PROPERTY_GAMMA_MODE: GAMMA_MODE_CODE_MAP.get,
     PROPERTY_HDR10_PQ_CURVE: int,
+    PROPERTY_HLG_CURVE: int,
     PROPERTY_LAMP_HOURS: int,
     PROPERTY_LIGHT_OUTPUT: int,
     PROPERTY_MUTE: lambda v: v == ON,
