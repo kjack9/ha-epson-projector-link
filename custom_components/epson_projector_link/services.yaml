@@ -199,7 +199,7 @@ send_command:
       selector:
         text:
 
-set_hdr10_pq:
+set_hdr10_pq_curve:
   name: Set HDR10 PQ Curve
   description: Sets the HDR10 PQ Curve slider in the HDR menu. Range from 1 to 16.
   target:
@@ -207,9 +207,9 @@ set_hdr10_pq:
       integration: epson_projector_link
       domain: media_player
   fields:
-    hdr10_pq:
-      name: HDR10 PQ Slider Value
-      description: HDR10 PQ Slider Value
+    hdr10_pq_curve:
+      name: HDR10 PQ Curve Slider Value
+      description: HDR10 PQ Curve Slider Value
       required: true
       example: 8
       selector:
@@ -343,5 +343,7 @@ set_light_output:
               value: 240
             - label: "99% Power (Value: 245)"
               value: 245
-            - label: "100% Power (Value: 250)"
-              value: 250
+            - label: "100% Power (Value: 251)"
+              value: 251
+            - label: "50% Power (Value: 0)"
+              value: 0

@@ -35,7 +35,7 @@ from .const import SERVICE_SELECT_DYNAMIC_RANGE
 from .const import SERVICE_SELECT_GAMMA_MODE
 from .const import SERVICE_SELECT_POWER_CONSUMPTION_MODE
 from .const import SERVICE_SEND_COMMAND
-from .const import SERVICE_SET_HDR10_PQ
+from .const import SERVICE_SET_HDR10_PQ_CURVE
 from .const import SERVICE_SET_LIGHT_OUTPUT
 from .projector.const import AUTO_IRIS_MODE_CODE_INVERTED_MAP
 from .projector.const import COLOR_MODE_CODE_INVERTED_MAP
@@ -60,7 +60,7 @@ from .projector.const import PROPERTY_COLOR_MODE
 from .projector.const import PROPERTY_COLOR_SPACE
 from .projector.const import PROPERTY_DYNAMIC_RANGE
 from .projector.const import PROPERTY_GAMMA_MODE
-from .projector.const import PROPERTY_HDR10_PQ
+from .projector.const import PROPERTY_HDR10_PQ_CURVE
 from .projector.const import PROPERTY_LIGHT_OUTPUT
 from .projector.const import PROPERTY_MUTE
 from .projector.const import PROPERTY_POWER
@@ -179,13 +179,13 @@ def _setup_services():
         SERVICE_SEND_COMMAND,
     )
     platform.async_register_entity_service(
-        SERVICE_SET_HDR10_PQ,
+        SERVICE_SET_HDR10_PQ_CURVE,
         {
-            vol.Required(PROPERTY_TO_ATTRIBUTE_NAME_MAP[PROPERTY_HDR10_PQ]): vol.All(
+            vol.Required(PROPERTY_TO_ATTRIBUTE_NAME_MAP[PROPERTY_HDR10_PQ_CURVE]): vol.All(
                 vol.Coerce(int), vol.Range(min=1, max=16)
             )
         },
-        SERVICE_SET_HDR10_PQ,
+        SERVICE_SET_HDR10_PQ_CURVE,
     )
     platform.async_register_entity_service(
         SERVICE_SET_LIGHT_OUTPUT,
@@ -473,8 +473,8 @@ class EpsonProjectorMediaPlayer(MediaPlayerEntity):
             POWER_CONSUMPTION_MODE_CODE_INVERTED_MAP[power_consumption_mode],
         )
 
-    async def set_hdr10_pq(self, hdr10_pq):
-        await self._projector.set_property(PROPERTY_HDR10_PQ, hdr10_pq)
+    async def set_hdr10_pq_curve(self, hdr10_pq_curve):
+        await self._projector.set_property(PROPERTY_HDR10_PQ_CURVE, hdr10_pq)
 
     async def set_light_output(self, light_output):
         await self._projector.set_property(PROPERTY_LIGHT_OUTPUT, light_output)

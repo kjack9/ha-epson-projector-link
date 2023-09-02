@@ -7,11 +7,12 @@ from .projector.const import PROPERTY_COLOR_SPACE
 from .projector.const import PROPERTY_DYNAMIC_RANGE
 from .projector.const import PROPERTY_ERR
 from .projector.const import PROPERTY_GAMMA_MODE
-from .projector.const import PROPERTY_HDR10_PQ
+from .projector.const import PROPERTY_HDR10_PQ_CURVE
 from .projector.const import PROPERTY_LAMP_HOURS
 from .projector.const import PROPERTY_LIGHT_OUTPUT
 from .projector.const import PROPERTY_MUTE
 from .projector.const import PROPERTY_POWER_CONSUMPTION_MODE
+from .projector.const import PROPERTY_SIGNAL_STATUS
 from .projector.const import PROPERTY_SOURCE
 from .projector.const import PROPERTY_VOLUME
 
@@ -32,11 +33,12 @@ PROPERTY_TO_ATTRIBUTE_NAME_MAP = {
     PROPERTY_DYNAMIC_RANGE: "dynamic_range",
     PROPERTY_ERR: "error",
     PROPERTY_GAMMA_MODE: "gamma_mode",
-    PROPERTY_HDR10_PQ: "hdr10_pq",
+    PROPERTY_HDR10_PQ_CURVE: "hdr10_pq",
     PROPERTY_LAMP_HOURS: "lamp_hours",
     PROPERTY_LIGHT_OUTPUT: "light_output",
     PROPERTY_MUTE: "is_volume_muted",
     PROPERTY_POWER_CONSUMPTION_MODE: "power_consumption_mode",
+    PROPERTY_SIGNAL_STATUS: "signal_status",
     PROPERTY_SOURCE: "source",
     PROPERTY_VOLUME: "volume",
 }
@@ -49,7 +51,7 @@ SERVICE_SELECT_COLOR_SPACE = "select_color_space"
 SERVICE_SELECT_DYNAMIC_RANGE = "select_dynamic_range"
 SERVICE_SELECT_GAMMA_MODE = "select_gamma_mode"
 SERVICE_SELECT_POWER_CONSUMPTION_MODE = "select_power_consumption_mode"
-SERVICE_SET_HDR10_PQ = "set_hdr10_pq"
+SERVICE_SET_HDR10_PQ_CURVE = "set_hdr10_pq_curve"
 SERVICE_SET_LIGHT_OUTPUT = "set_light_output"
 
 SERVICE_SEND_COMMAND = "send_command"
